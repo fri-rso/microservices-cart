@@ -1,4 +1,4 @@
--  **Cikel zvezne integracije(Travis CI ustvari sliko Docker in objavi na Docker Hub)
+***Cikel zvezne integracije(Travis CI ustvari sliko Docker in objavi na Docker Hub)
 - Konfiguracija(identificiranje konfiguracije, ločitev konfiguracije in implementacije** 
   (spreminjanje konfiguracije brez ponovnega nameščanja), **konfiguracijske datoteke, 
   okoljske spremenljivke,** konfiguracijski strežnik)
@@ -7,7 +7,7 @@
 - HealthCheck (vsaj dve kontroli zdravja, API za preverjanje zdravja vrača ustrezne HTTP status kode, 
   da bo skladen s Kubernetes Liveness Probes, v Kubernetes Deployments dodajte Liveness Probes, 
   simulirajte bolno storitev in opazujte ali jo Kubernetes zažene na novo)
--  **Metrics (storitvam dodajte končno točko na kateri izpostavite nekaj metrik)
+***Metrics (storitvam dodajte končno točko na kateri izpostavite nekaj metrik)
 - Dnevniške datoteke (pošiljanje logov na logit.io, dodajanje konteksta logom(ime storitve, verzija, okolje…),
   beležite vhode iz izhode v storitve, pripravite tri zanimive poizvedbe dnevnikov 
   (npr. izpis vseh vstopov v določeno metodo)**
