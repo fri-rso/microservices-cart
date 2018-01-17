@@ -17,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="microservices-cart" target="1.8" />
       <module name="microservices-cart-api" target="1.8" />
       <module name="microservices-cart-models" target="1.8" />
       <module name="microservices-profile-api" target="1.8" />

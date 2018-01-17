@@ -2,6 +2,7 @@ package com.kumuluz.ee.samples.microservices.simple;
 
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
+import com.kumuluz.ee.logs.cdi.Log;
 import com.kumuluz.ee.samples.microservices.simple.models.Cart;
 import org.eclipse.microprofile.metrics.Histogram;
 import org.eclipse.microprofile.metrics.annotation.Metered;
@@ -24,10 +25,9 @@ import java.util.List;
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-
+@Log
 public class CartResource {
 
-    private static final Logger LOG = LogManager.getLogger(CartResource.class.getName());
 
     @PersistenceContext
     private EntityManager em;
@@ -42,12 +42,12 @@ public class CartResource {
     @GET
     @Metered(name = "getCarts_meter")
     public Response getCarts() {
-        LOG.trace("getCarts ENTRY");
+        //LOG.trace("getCarts ENTRY");
         TypedQuery<Cart> query = em.createNamedQuery("Cart.findAll", Cart.class);
 
         List<Cart> carts = query.getResultList();
         histogram.update(carts.size());
-        LOG.info("Stevilo vseh cartov: {}", carts.size());
+        //LOG.info("Stevilo vseh cartov: {}", carts.size());
         return Response.ok(carts).build();
     }
 
@@ -59,14 +59,14 @@ public class CartResource {
     @Path("/{id}")
     @Timed(name = "getCart_timer")
     public Response getCart(@PathParam("id") Integer id) {
-        LOG.trace("getCart ENTRY");
+        //LOG.trace("getCart ENTRY");
         Cart p = em.find(Cart.class, id);
 
         if (p == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
 
         }
-        LOG.info("Cart search ID: {}", p.getId());
+        //LOG.info("Cart search ID: {}", p.getId());
         return Response.ok(p).build();
     }
 
@@ -76,7 +76,7 @@ public class CartResource {
     @POST
     @Path("/{id}")
     public Response editCart(@PathParam("id") Integer id, Cart cart) {
-        LOG.trace("editCart ENTRY");
+        //LOG.trace("editCart ENTRY");
         Cart p = em.find(Cart.class, id);
 
         if (p == null)
@@ -93,7 +93,7 @@ public class CartResource {
         em.persist(p);
 
         em.getTransaction().commit();
-        LOG.info("Uspesno urejen cart ID: {}", p.getId());
+        //LOG.info("Uspesno urejen cart ID: {}", p.getId());
         return Response.status(Response.Status.CREATED).entity(p).build();
     }
 
@@ -102,7 +102,7 @@ public class CartResource {
      */
     @POST
     public Response createCart(Cart p) {
-        LOG.trace("createCart ENTRY");
+        //LOG.trace("createCart ENTRY");
         p.setId(null);
 
         em.getTransaction().begin();
@@ -110,7 +110,7 @@ public class CartResource {
         em.persist(p);
 
         em.getTransaction().commit();
-        LOG.info("Uspesno dodan cart ID: {}", p.getId());
+        //LOG.info("Uspesno dodan cart ID: {}", p.getId());
         return Response.status(Response.Status.CREATED).entity(p).build();
     }
 
@@ -124,7 +124,7 @@ public class CartResource {
     @GET
     @Path("/config")
     public Response test() {
-        LOG.trace("config ENTRY");
+        //LOG.trace("config ENTRY");
         String response =
                 "{" +
                         "\"jndi-name\": \"%s\"," +
@@ -142,7 +142,7 @@ public class CartResource {
                 properties.getPassword(),
                 properties.getMaxPoolSize()
         );
-        LOG.trace("config uspesen EXIT");
+        //LOG.trace("config uspesen EXIT");
         return Response.ok(response).build();
     }
 }
